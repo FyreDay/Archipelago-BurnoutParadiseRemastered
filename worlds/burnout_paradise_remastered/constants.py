@@ -3,8 +3,8 @@ from enum import IntEnum, StrEnum, Enum
 BURNOUT_PARADISE_REMASTERED = "Burnout Paradise Remastered"
 
 class BreakableType(IntEnum):
-    SMASH = 1,
-    BILLBOARD = 2,
+    SMASH = 1
+    BILLBOARD = 2
     SUPER_JUMP = 3
 
 class AreaTypeEnum(Enum):
@@ -13,11 +13,11 @@ class AreaTypeEnum(Enum):
         self.index = index
 
 class AreaType(AreaTypeEnum):
-    PALM_BAY_HEIGHTS = ("Palm Bay Heights", 0),
-    SILVER_LAKE = ("Silver Lake", 1),
-    WHITE_MOUNTAIN = ("White Mountain", 2),
-    HARBOR_TOWN = ("Harbor Town",3),
-    DOWNTOWN_PARADISE = ("Downtown Paradise",4),
+    PALM_BAY_HEIGHTS = ("Palm Bay Heights", 0)
+    SILVER_LAKE = ("Silver Lake", 1)
+    WHITE_MOUNTAIN = ("White Mountain", 2)
+    HARBOR_TOWN = ("Harbor Town",3)
+    DOWNTOWN_PARADISE = ("Downtown Paradise",4)
     BIG_SURF_ISLAND = ("Big Surf Island", 5)
 
 

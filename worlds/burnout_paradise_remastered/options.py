@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from Options import OptionGroup, Toggle, PerGameCommonOptions, Choice, Range, OptionCounter
-from worlds.burnout_paradise_remastered.constants import AreaType
+from .constants import AreaType
 
 
 class Goal(Choice):
@@ -39,19 +39,19 @@ class CarCollectionGoal(Range):
     """
     If on Car Collection Goal, how many cars do you need to goal?
     """
-    display_name = "Trap Percentage"
+    display_name = "Car Goal Amount"
     range_start = 10
     range_end = 75
     default = 0
 
 
 smash_sanity_default = {
-    AreaType.PALM_BAY_HEIGHTS : 15,
-    AreaType.SILVER_LAKE : 15,
-    AreaType.WHITE_MOUNTAIN : 15,
-    AreaType.HARBOR_TOWN : 15,
-    AreaType.DOWNTOWN_PARADISE : 15,
-    AreaType.BIG_SURF_ISLAND : 15,
+    AreaType.PALM_BAY_HEIGHTS.value : 15,
+    AreaType.SILVER_LAKE.value : 15,
+    AreaType.WHITE_MOUNTAIN.value : 15,
+    AreaType.HARBOR_TOWN.value : 15,
+    AreaType.DOWNTOWN_PARADISE.value : 15,
+    AreaType.BIG_SURF_ISLAND.value : 15,
 }
 
 class SmashSanityCounts(OptionCounter):
@@ -73,12 +73,12 @@ class SmashSanityCounts(OptionCounter):
     valid_keys = smash_sanity_default.keys()
 
 billboard_sanity_default = {
-    AreaType.PALM_BAY_HEIGHTS : 0,
-    AreaType.SILVER_LAKE : 0,
-    AreaType.WHITE_MOUNTAIN : 0,
-    AreaType.HARBOR_TOWN : 0,
-    AreaType.DOWNTOWN_PARADISE : 0,
-    AreaType.BIG_SURF_ISLAND : 0,
+    AreaType.PALM_BAY_HEIGHTS.value : 0,
+    AreaType.SILVER_LAKE.value : 0,
+    AreaType.WHITE_MOUNTAIN.value : 0,
+    AreaType.HARBOR_TOWN.value : 0,
+    AreaType.DOWNTOWN_PARADISE.value : 0,
+    AreaType.BIG_SURF_ISLAND.value : 0,
 }
 
 class BillboardSanityCounts(OptionCounter):
@@ -100,12 +100,12 @@ class BillboardSanityCounts(OptionCounter):
     valid_keys = billboard_sanity_default.keys()
 
 super_jump_sanity_default = {
-    AreaType.PALM_BAY_HEIGHTS : 0,
-    AreaType.SILVER_LAKE : 0,
-    AreaType.WHITE_MOUNTAIN : 0,
-    AreaType.HARBOR_TOWN : 0,
-    AreaType.DOWNTOWN_PARADISE : 0,
-    AreaType.BIG_SURF_ISLAND : 0,
+    AreaType.PALM_BAY_HEIGHTS.value : 0,
+    AreaType.SILVER_LAKE.value : 0,
+    AreaType.WHITE_MOUNTAIN.value : 0,
+    AreaType.HARBOR_TOWN.value : 0,
+    AreaType.DOWNTOWN_PARADISE.value : 0,
+    AreaType.BIG_SURF_ISLAND.value : 0,
 }
 
 class SuperJumpSanityCounts(OptionCounter):
@@ -124,6 +124,7 @@ class SuperJumpSanityCounts(OptionCounter):
     default = super_jump_sanity_default
     min = 0
     max = 15
+    cull_zeroes = False
     valid_keys = super_jump_sanity_default.keys()
 
 class DeathLink(Toggle):

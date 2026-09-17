@@ -1,11 +1,11 @@
 from collections import defaultdict
 from typing import TYPE_CHECKING
 
-from BaseClasses import Location, Region, Entrance, EntranceType
-from .data import RegionTypeEnum, LocationTypeEnum, GeneratedLocationData
-from .data.locations import all_Enum_locations, all_Generated_locations
+from BaseClasses import Location, Region, EntranceType
+from .data import RegionTypeEnum, GeneratedLocationData
+from .data.locations import all_Generated_locations
 from .data.locations.cars import CarLocations
-from .data.regions.entrances import Regions, Entrances
+from .data.regions.entrances import Entrances
 
 if TYPE_CHECKING:
     from . import BurnoutParadiseRemasteredWorld

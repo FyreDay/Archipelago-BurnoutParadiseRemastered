@@ -4,8 +4,9 @@ from typing import override
 from BaseClasses import CollectionState
 from NetUtils import JSONMessagePart
 from rule_builder.rules import Rule
-from worlds.burnout_paradise_remastered import BurnoutParadiseRemasteredBase, BURNOUT_PARADISE_REMASTERED
-from worlds.burnout_paradise_remastered.data.items.events import Events
+from ...world_base import BurnoutParadiseRemasteredBase
+from ..items.events import Events
+from ...constants import BURNOUT_PARADISE_REMASTERED
 
 
 

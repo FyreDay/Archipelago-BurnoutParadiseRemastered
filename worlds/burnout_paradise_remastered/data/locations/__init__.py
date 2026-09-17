@@ -1,12 +1,13 @@
 from .breakables import get_locations_for_breakable, breakable_count_lookup
+from .cars import CarLocations
 from .. import GeneratedLocationData
 from ...constants import BreakableType, AreaType
 from ...data import LocationTypeEnum
 
 all_Enum_locations: list[LocationTypeEnum] = [
-    *cars,
-    *events,
-    *licenses,
+    *CarLocations,
+    # *events,
+    # *licenses,
 ]
 
 all_Generated_locations: list[GeneratedLocationData] = [

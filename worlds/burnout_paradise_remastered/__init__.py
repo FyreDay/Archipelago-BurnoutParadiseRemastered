@@ -1,5 +1,5 @@
 import json
-from importlib.metadata import files
+from importlib.resources import files
 from typing import ClassVar, Any
 
 from BaseClasses import Tutorial, Item
@@ -48,8 +48,14 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         item.value: item.item_id for item in all_items
     }
     location_name_to_id: ClassVar[dict[str, int]] = {
-        {loc.value: loc.location_id for loc in all_Enum_locations}
-        | {loc.name: loc.location_id for loc in all_Generated_locations}
+        **{
+            loc.value: loc.location_id
+            for loc in all_Enum_locations
+        },
+        **{
+            gen_loc.name: gen_loc.location_id
+            for gen_loc in all_Generated_locations
+        },
     }
 
     item_name_groups: ClassVar[dict[str, set[str]]] = {

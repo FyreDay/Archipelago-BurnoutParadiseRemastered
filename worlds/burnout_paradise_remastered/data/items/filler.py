@@ -4,4 +4,4 @@ from worlds.burnout_paradise_remastered.data import ItemTypeEnum
 
 
 class Filler(ItemTypeEnum):
-        BOOST = ("Boost", ITEMS_OFFSET_Filler + 0, ItemClassification.filler),
+        BOOST = ("Boost", ITEMS_OFFSET_Filler + 0, ItemClassification.filler)

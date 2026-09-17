@@ -1,9 +1,11 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from BaseClasses import ItemClassification, CollectionRule, LocationProgressType, EntranceType
 from rule_builder.rules import Rule, True_
-from worlds.burnout_paradise_remastered import BurnoutParadiseRemasteredBase
+
+from ..world_base import BurnoutParadiseRemasteredBase
 
 
 
@@ -45,10 +47,12 @@ class LocationTypeEnum(Enum):
         self.progress_type = progress_type
         # self.item_rule: Callable[[Item], bool] = item_rule
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(kw_only=True)
 class GeneratedLocationData:
     name: str
     location_id: int
     region: RegionTypeEnum
-    rule: CollectionRule | Rule[BurnoutParadiseRemasteredBase] = True_()
+    rule: CollectionRule | Rule[BurnoutParadiseRemasteredBase] = field(
+        default_factory=True_
+    )
     progress_type: LocationProgressType = LocationProgressType.DEFAULT

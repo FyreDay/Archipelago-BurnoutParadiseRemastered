@@ -3,37 +3,37 @@ from ..regions.regions import Regions
 from ...constants import AreaType, BreakableType, LOCATIONS_OFFSET_BREAKABLES
 
 breakable_count_lookup = {
-    AreaType.DOWNTOWN_PARADISE : {
+    AreaType.DOWNTOWN_PARADISE.value : {
         BreakableType.SMASH : 80,
         BreakableType.BILLBOARD : 30,
         BreakableType.SUPER_JUMP : 10,
 
     },
-    AreaType.HARBOR_TOWN: {
+    AreaType.HARBOR_TOWN.value: {
         BreakableType.SMASH: 90,
         BreakableType.BILLBOARD : 25,
         BreakableType.SUPER_JUMP : 10,
 
     },
-    AreaType.WHITE_MOUNTAIN: {
+    AreaType.WHITE_MOUNTAIN.value: {
         BreakableType.SMASH: 90,
         BreakableType.BILLBOARD : 25,
         BreakableType.SUPER_JUMP : 10,
 
     },
-    AreaType.SILVER_LAKE: {
+    AreaType.SILVER_LAKE.value: {
         BreakableType.SMASH: 90,
         BreakableType.BILLBOARD : 20,
         BreakableType.SUPER_JUMP : 10,
 
     },
-    AreaType.PALM_BAY_HEIGHTS: {
+    AreaType.PALM_BAY_HEIGHTS.value: {
         BreakableType.SMASH: 50,
         BreakableType.BILLBOARD : 20,
         BreakableType.SUPER_JUMP : 10,
 
     },
-    AreaType.BIG_SURF_ISLAND: {
+    AreaType.BIG_SURF_ISLAND.value: {
         BreakableType.SMASH: 75,
         BreakableType.BILLBOARD : 45,
         BreakableType.SUPER_JUMP : 15,
@@ -58,12 +58,12 @@ region_lookup = {
 
 def get_locations_for_breakable(breakable: BreakableType, area: AreaType, count):
     locs: list[GeneratedLocationData] = []
-    count = count if count <= breakable_count_lookup[area][breakable] else breakable_count_lookup[area][breakable]
+    count = count if count <= breakable_count_lookup[area.value][breakable] else breakable_count_lookup[area.value][breakable]
     for num in range(count):
-        name = f"{area.name} {"Mega Jump" if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
+        name = f"{area.value} {"Mega Jump" if area == AreaType.BIG_SURF_ISLAND and breakable == BreakableType.SUPER_JUMP else name_lookup[breakable]} {num+1}"
         locs.append(GeneratedLocationData(
             name = name,
-            location_id=LOCATIONS_OFFSET_BREAKABLES + 1000 * area.index + 100 * breakable.value,
+            location_id=LOCATIONS_OFFSET_BREAKABLES + (1000 * area.index) + (100 * breakable.value) + num,
             region=region_lookup[area]))
     return locs
 

@@ -8,12 +8,13 @@ from rule_builder.rules import Has, HasFromList, HasFromListUnique
 from worlds.AutoWorld import WebWorld
 from . import locations, items
 from .constants import BURNOUT_PARADISE_REMASTERED, D_CLASS_WINS, BURNOUT_WINS, BURNOUT_ELITE_WINS, A_CLASS_WINS, \
-    B_CLASS_WINS, C_CLASS_WINS
-from .data.items import all_items
+    B_CLASS_WINS, C_CLASS_WINS, AreaType, BreakableType
+from .data.items import all_items, Events, Blockers
 from .data.items.cars import Cars
-from .data.locations import all_Generated_locations, all_Enum_locations
+from .data.items.events import BurningEvents
+from .data.locations import all_Generated_locations, all_Enum_locations, breakable_count_lookup
 from .data.rules.state_rules import HasEventWins
-from .options import burnout_paradise_remastered_option_groups, BurnoutParadiseRemasteredOptions
+from .options import burnout_paradise_remastered_option_groups, BurnoutParadiseRemasteredOptions, Goal, LicenseGoal
 from .world_base import BurnoutParadiseRemasteredBase
 
 
@@ -59,9 +60,10 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
     }
 
     item_name_groups: ClassVar[dict[str, set[str]]] = {
-        "Car": set(),
-        "Event": set(),
-        "Area": set(),
+        "Car": {car.value for car in Cars},
+        "Event": {event.value for event in Events},
+        "Burning Route": {event.value for event in BurningEvents},
+        "Area Breakable": {area.value for area in Blockers},
     }
 
     item_lookup = {item.value: item for item in all_items}
@@ -79,24 +81,54 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
         self.goal_event_wins = 0
 
+        self.smash_sanity_data: list[(AreaType)] = {}
+
         self.is_ut = False
         super().__init__(multiworld, player)
 
     def generate_early(self) -> None:
-        if self.options.goal == BurnoutParadiseRemasteredOptions.goal.option_license_level:
+        if self.options.goal == Goal.option_license_level:
             match self.options.license_goal:
-                case BurnoutParadiseRemasteredOptions.license_goal.option_C_Class:
+                case LicenseGoal.option_C_Class:
                     self.goal_event_wins = C_CLASS_WINS
-                case BurnoutParadiseRemasteredOptions.license_goal.option_B_Class:
+                case LicenseGoal.option_B_Class:
                     self.goal_event_wins = B_CLASS_WINS
-                case BurnoutParadiseRemasteredOptions.license_goal.option_A_Class:
+                case LicenseGoal.option_A_Class:
                     self.goal_event_wins = A_CLASS_WINS
-                case BurnoutParadiseRemasteredOptions.license_goal.option_Burnout:
+                case LicenseGoal.option_Burnout:
                     self.goal_event_wins = BURNOUT_WINS
-                case BurnoutParadiseRemasteredOptions.license_goal.option_Burnout_Elite:
+                case LicenseGoal.option_Burnout_Elite:
                     self.goal_event_wins = BURNOUT_ELITE_WINS
 
+        missing = {area.value for area in AreaType} - self.options.smash_counts.value.keys()
 
+        if missing:
+            raise ValueError(f"Smash Sanity Missing Area values: {missing}")
+
+        for area_name, value in self.options.smash_counts.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.SMASH]:
+                self.options.smash_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SMASH]
+            print(f"{area_name} & {BreakableType.SMASH.value} : {self.options.smash_counts.value[area_name]}")
+
+        missing = {area.value for area in AreaType} - self.options.billboard_counts.value.keys()
+
+        if missing:
+            raise ValueError(f"Billboard Sanity Missing Area values: {missing}")
+
+        for area_name, value in self.options.billboard_counts.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.BILLBOARD]:
+                self.options.billboard_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.BILLBOARD]
+            print(f"{area_name} & {BreakableType.BILLBOARD.value} : {self.options.billboard_counts.value[area_name]}")
+
+        missing = {area.value for area in AreaType} - self.options.super_jump_counts.value.keys()
+
+        if missing:
+            raise ValueError(f"Super Jump Sanity Missing Area values: {missing}")
+
+        for area_name, value in self.options.super_jump_counts.value.items():
+            if value > breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]:
+                self.options.super_jump_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]
+            print(f"{area_name} & {BreakableType.SUPER_JUMP.value} : {self.options.super_jump_counts.value[area_name]}")
 
         self.is_ut = (hasattr(self.multiworld, "re_gen_passthrough")
                       and isinstance(self.multiworld.re_gen_passthrough, dict)
@@ -126,12 +158,12 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
             self.push_precollected(item)
 
     def set_rules(self):
-        if self.options.goal.value == self.options.goal.option_collect_cars:
-            self.set_completion_rule(HasFromListUnique(
-                *(item.value for item in Cars),
-                count=self.options.car_goal.value
-            ))
-        if self.options.goal.value == self.options.goal.option_license_level:
+        # if self.options.goal.value == self.options.goal.option_collect_cars:
+        #     self.set_completion_rule(HasFromListUnique(
+        #         *(item.value for item in Cars),
+        #         count=self.options.car_goal.value
+        #     ))
+        if self.options.goal.value == Goal.option_license_level:
             self.set_completion_rule(HasEventWins(wins=self.goal_event_wins))
 
 
@@ -151,7 +183,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
             "sem_ver": self.manifest["mod_version"],
             "goal_config": self.options.goal.value,
             "license_goal_count": self.options.license_goal.value,
-            "car_goal_count": self.options.car_goal.value,
+            # "car_goal_count": self.options.car_goal.value,
             "smash_sanity": self.options.smash_counts.value,
             "billboard_sanity": self.options.billboard_counts.value,
             "super_jump_sanity": self.options.super_jump_counts.value,
@@ -172,7 +204,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
         self.options.goal.value = slot_data["goal_config"]
         self.options.license_goal.value = slot_data["license_goal_count"]
-        self.options.car_goal.value = slot_data["car_goal_count"]
+        # self.options.car_goal.value = slot_data["car_goal_count"]
         self.smash_counts.value = slot_data["smash_sanity"]
         self.options.billboard_counts.value = slot_data["billboard_sanity"]
         self.super_jump_counts.value = slot_data["super_jump_sanity"]

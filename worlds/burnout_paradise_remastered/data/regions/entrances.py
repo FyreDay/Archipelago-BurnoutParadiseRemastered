@@ -1,8 +1,8 @@
 from BaseClasses import EntranceType
 from rule_builder.rules import Has
-from worlds.burnout_paradise_remastered.data import EntranceTypeEnum
-from worlds.burnout_paradise_remastered.data.items.blockers import Blockers
-from worlds.burnout_paradise_remastered.data.regions.regions import Regions
+from .. import EntranceTypeEnum
+from ..items.blockers import Blockers
+from ..regions.regions import Regions
 
 
 class Entrances(EntranceTypeEnum):

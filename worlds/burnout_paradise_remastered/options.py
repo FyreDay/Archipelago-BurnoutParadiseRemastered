@@ -9,13 +9,12 @@ class Goal(Choice):
     Goal
 
     License Level: Reach the Specified License
-    Collect Cars: Collect the specified amount of cars. This is a mc-guffin hunt
-
     """
+    #Collect Cars: Collect the specified amount of cars. This is a mc-guffin hunt
     display_name = "Goal"
     option_license_level = 0
-    option_collect_cars = 1
-    default = 1
+    # option_collect_cars = 1
+    default = 0
 
 class LicenseGoal(Choice):
     """
@@ -35,14 +34,14 @@ class LicenseGoal(Choice):
     option_Burnout_Elite = 4
     default = 2
 
-class CarCollectionGoal(Range):
-    """
-    If on Car Collection Goal, how many cars do you need to goal?
-    """
-    display_name = "Car Goal Amount"
-    range_start = 10
-    range_end = 75
-    default = 0
+# class CarCollectionGoal(Range):
+#     """
+#     If on Car Collection Goal, how many cars do you need to goal?
+#     """
+#     display_name = "Car Goal Amount"
+#     range_start = 10
+#     range_end = 75
+#     default = 0
 
 
 smash_sanity_default = {
@@ -140,7 +139,7 @@ burnout_paradise_remastered_option_groups= [
     OptionGroup("Goal Options", [
         Goal,
         LicenseGoal,
-        CarCollectionGoal,
+        # CarCollectionGoal,
     ]),
     OptionGroup("Sanity Options", [
         SmashSanityCounts,
@@ -154,7 +153,7 @@ class BurnoutParadiseRemasteredOptions(PerGameCommonOptions):
     deathlink: DeathLink
     goal: Goal
     license_goal: LicenseGoal
-    car_goal: CarCollectionGoal
+    # car_goal: CarCollectionGoal
     smash_counts: SmashSanityCounts
     billboard_counts: BillboardSanityCounts
     super_jump_counts: SuperJumpSanityCounts

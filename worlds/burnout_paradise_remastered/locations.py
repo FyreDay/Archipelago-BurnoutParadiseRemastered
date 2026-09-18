@@ -3,12 +3,15 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Location, Region, EntranceType
 from .data import RegionTypeEnum, GeneratedLocationData
-from .data.locations import all_Generated_locations
+from .data.locations import all_Generated_locations, get_locations_for_breakable, EventLocations, LicenseLocations
 from .data.locations.cars import CarLocations
 from .data.regions.entrances import Entrances
+from .data.regions.regions import Regions
+from .constants import BreakableType, AreaType
 
 if TYPE_CHECKING:
     from . import BurnoutParadiseRemasteredWorld
+
 
 class DefaultRegions(RegionTypeEnum):
     MENU = "Menu"
@@ -19,7 +22,7 @@ def create_location(world, data: GeneratedLocationData):
     location = Location(world.player, data.name, data.location_id, region)
     location.progress_type = data.progress_type
     # location.item_rule = data.item_rule
-
+    print(location.name)
     region.locations.append(location)
     world.set_rule(location, data.rule)
 
@@ -34,6 +37,7 @@ def create_region(world: "BurnoutParadiseRemasteredWorld", region_type: RegionTy
         location = Location(world.player, data.name, data.location_id, region)
         location.progress_type = data.progress_type
         # location.item_rule = data.item_rule
+        print(f"{location.name} : {data.location_id}")
         region.locations.append(location)
         world.set_rule(location, data.rule)
 
@@ -50,8 +54,37 @@ def create_regions(world: "BurnoutParadiseRemasteredWorld"):
             rule=_location.rule,
             location_id=_location.location_id
         ))
-    for _location in all_Generated_locations:
-        locations_by_region[_location.region].append(_location)
+
+    for _location in EventLocations:
+        locations_by_region[_location.region].append(GeneratedLocationData(
+             name=_location.value,
+             region=_location.region,
+             rule=_location.rule,
+             location_id=_location.location_id
+         ))
+
+    for _location in LicenseLocations:
+        locations_by_region[_location.region].append(GeneratedLocationData(
+             name=_location.value,
+             region=_location.region,
+             rule=_location.rule,
+             location_id=_location.location_id
+         ))
+
+    for area_name, value in world.options.smash_counts.value.items():
+        generated_locs = get_locations_for_breakable(BreakableType.SMASH, AreaType(area_name), value)
+        for _location in generated_locs:
+            locations_by_region[_location.region].append(_location)
+
+    for area_name, value in world.options.billboard_counts.value.items():
+        generated_locs = get_locations_for_breakable(BreakableType.BILLBOARD, AreaType(area_name), value)
+        for _location in generated_locs:
+            locations_by_region[_location.region].append(_location)
+
+    for area_name, value in world.options.super_jump_counts.value.items():
+        generated_locs = get_locations_for_breakable(BreakableType.SUPER_JUMP, AreaType(area_name), value)
+        for _location in generated_locs:
+            locations_by_region[_location.region].append(_location)
 
     for region in Regions:
         create_region(world, region, locations_by_region)
@@ -69,4 +102,4 @@ def create_entrances(world: "BurnoutParadiseRemasteredWorld"):
         entrance = world.create_entrance(exiting_region, entering_region, rule=transition_data.rule, name=transition_data.value, force_creation=True)
         if transition_data.two_way == EntranceType.TWO_WAY:
             entrance_other = world.create_entrance(entering_region,exiting_region, rule=transition_data.rule,
-                                             name=transition_data.value, force_creation=True)
+                                             name=transition_data.value + "_back", force_creation=True)

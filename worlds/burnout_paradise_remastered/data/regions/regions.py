@@ -1,5 +1,5 @@
-from worlds.burnout_paradise_remastered.constants import AreaType
-from worlds.burnout_paradise_remastered.data import RegionTypeEnum
+from ...constants import AreaType
+from .. import RegionTypeEnum
 
 
 class Regions(RegionTypeEnum):

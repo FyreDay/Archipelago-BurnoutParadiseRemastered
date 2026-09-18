@@ -1,14 +1,11 @@
-name: Release
+name: Unit Tests And Build
 
 on:
   push:
-    tags:
-      - "v*"
+  pull_request:
 
 jobs:
-  release:
-    permissions:
-      contents: write
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,9 +41,14 @@ jobs:
           sed -i '0,/version: 0\.6\.8/s//version: 0.6.7/' \
             "Players/Templates/Burnout Paradise Remastered.yaml"
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload APWorld
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            build/apworlds/burnout_paradise_remastered.apworld
-            Players/Templates/Burnout Paradise Remastered.yaml
+          name: burnout-paradise-remastered-apworld
+          path: build/apworlds/burnout_paradise_remastered.apworld
+
+      - name: Upload Template
+        uses: actions/upload-artifact@v4
+        with:
+          name: burnout-paradise-remastered-template
+          path: Players/Templates/Burnout Paradise Remastered.yaml

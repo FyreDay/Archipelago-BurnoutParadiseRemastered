@@ -36,8 +36,9 @@ def create_items(world: "MinaTheHollowerWorld"):
 
     remaining_events = set(Events) - starting_events
 
-    for item_type in Blockers:
-        create_single_item(world, item_type)
+    if world.options.breakable_locks.value:
+        for item_type in Blockers:
+            create_single_item(world, item_type)
     for item_type in Cars:
         create_single_item(world, item_type)
     for item_type in BurningCars:

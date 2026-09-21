@@ -1,8 +1,10 @@
 from BaseClasses import EntranceType
+from rule_builder.options import OptionFilter
 from rule_builder.rules import Has
 from .. import EntranceTypeEnum
 from ..items.blockers import Blockers
 from ..regions.regions import Regions
+from ...options import BreakableLocks
 
 
 class Entrances(EntranceTypeEnum):
@@ -68,7 +70,7 @@ class Entrances(EntranceTypeEnum):
         Regions.DOWNTOWN_PARADISE,
         Regions.DOWNTOWN_PARADISE_BREAKABLES,
         EntranceType.TWO_WAY,
-        Has(Blockers.DOWNTOWN_PARADISE.value),
+        Has(Blockers.DOWNTOWN_PARADISE.value, options=[OptionFilter(BreakableLocks, 1)]),
     )
 
     PALM_BAY_HEIGHTS_TO_BREAKABLES = (
@@ -76,7 +78,7 @@ class Entrances(EntranceTypeEnum):
         Regions.PALM_BAY_HEIGHTS,
         Regions.PALM_BAY_HEIGHTS_BREAKABLES,
         EntranceType.TWO_WAY,
-        Has(Blockers.PALM_BAY_HEIGHTS.value),
+        Has(Blockers.PALM_BAY_HEIGHTS.value, options=[OptionFilter(BreakableLocks, 1)]),
     )
 
     SILVER_LAKE_TO_BREAKABLES = (
@@ -84,7 +86,7 @@ class Entrances(EntranceTypeEnum):
         Regions.SILVER_LAKE,
         Regions.SILVER_LAKE_BREAKABLES,
         EntranceType.TWO_WAY,
-        Has(Blockers.SILVER_LAKE.value),
+        Has(Blockers.SILVER_LAKE.value, options=[OptionFilter(BreakableLocks, 1)]),
     )
 
     WHITE_MOUNTAIN_TO_BREAKABLES = (
@@ -92,7 +94,7 @@ class Entrances(EntranceTypeEnum):
         Regions.WHITE_MOUNTAIN,
         Regions.WHITE_MOUNTAIN_BREAKABLES,
         EntranceType.TWO_WAY,
-        Has(Blockers.WHITE_MOUNTAIN.value),
+        Has(Blockers.WHITE_MOUNTAIN.value, options=[OptionFilter(BreakableLocks, 1)]),
     )
 
     HARBOR_TOWN_TO_BREAKABLES = (
@@ -100,7 +102,7 @@ class Entrances(EntranceTypeEnum):
         Regions.HARBOR_TOWN,
         Regions.HARBOR_TOWN_BREAKABLES,
         EntranceType.TWO_WAY,
-        Has(Blockers.HARBOR_TOWN.value),
+        Has(Blockers.HARBOR_TOWN.value, options=[OptionFilter(BreakableLocks, 1)]),
     )
 
     BIG_SURF_ISLAND_TO_BREAKABLES = (
@@ -108,5 +110,5 @@ class Entrances(EntranceTypeEnum):
         Regions.BIG_SURF_ISLAND,
         Regions.BIG_SURF_ISLAND_BREAKABLES,
         EntranceType.TWO_WAY,
-        Has(Blockers.BIG_SURF_ISLAND.value),
+        Has(Blockers.BIG_SURF_ISLAND.value, options=[OptionFilter(BreakableLocks, 1)]),
     )

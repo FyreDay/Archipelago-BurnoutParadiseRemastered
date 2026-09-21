@@ -89,6 +89,7 @@ class Events(ItemTypeEnum):
     PRESS_GANGED = ("Press Ganged", 527094, ItemClassification.progression)
     FREEWAY_FRENZY = ("Freeway Frenzy", 533905, ItemClassification.progression)
 
+#not used, as cars unlock them
 class BurningEvents(ItemTypeEnum):
     OPUS_BURNING_ROUTE = ("Opus Burning Route", 480846, ItemClassification.progression)
     GT_2400_BURNING_ROUTE = ("GT 2400 Burning Route", 480847, ItemClassification.progression)

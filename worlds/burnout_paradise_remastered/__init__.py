@@ -108,7 +108,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         for area_name, value in self.options.smash_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.SMASH]:
                 self.options.smash_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SMASH]
-            print(f"{area_name} & {BreakableType.SMASH.value} : {self.options.smash_counts.value[area_name]}")
+
 
         missing = {area.value for area in AreaType} - self.options.billboard_counts.value.keys()
 
@@ -118,7 +118,6 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         for area_name, value in self.options.billboard_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.BILLBOARD]:
                 self.options.billboard_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.BILLBOARD]
-            print(f"{area_name} & {BreakableType.BILLBOARD.value} : {self.options.billboard_counts.value[area_name]}")
 
         missing = {area.value for area in AreaType} - self.options.super_jump_counts.value.keys()
 
@@ -128,7 +127,6 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         for area_name, value in self.options.super_jump_counts.value.items():
             if value > breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]:
                 self.options.super_jump_counts.value[area_name] = breakable_count_lookup[area_name][BreakableType.SUPER_JUMP]
-            print(f"{area_name} & {BreakableType.SUPER_JUMP.value} : {self.options.super_jump_counts.value[area_name]}")
 
         self.is_ut = (hasattr(self.multiworld, "re_gen_passthrough")
                       and isinstance(self.multiworld.re_gen_passthrough, dict)
@@ -182,8 +180,9 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         return {
             "sem_ver": self.manifest["mod_version"],
             "goal_config": self.options.goal.value,
-            "license_goal_count": self.options.license_goal.value,
+            "license_goal": self.options.license_goal.value,
             # "car_goal_count": self.options.car_goal.value,
+            "breakable_locks" : self.options.breakable_locks.value,
             "smash_sanity": self.options.smash_counts.value,
             "billboard_sanity": self.options.billboard_counts.value,
             "super_jump_sanity": self.options.super_jump_counts.value,
@@ -203,7 +202,8 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         self.options.deathlink.value = slot_data["death_link"]
 
         self.options.goal.value = slot_data["goal_config"]
-        self.options.license_goal.value = slot_data["license_goal_count"]
+        self.options.license_goal.value = slot_data["license_goal"]
+        self.options.breakable_locks = slot_data["breakable_locks"]
         # self.options.car_goal.value = slot_data["car_goal_count"]
         self.smash_counts.value = slot_data["smash_sanity"]
         self.options.billboard_counts.value = slot_data["billboard_sanity"]

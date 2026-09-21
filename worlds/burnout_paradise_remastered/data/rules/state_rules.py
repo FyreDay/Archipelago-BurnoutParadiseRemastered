@@ -4,6 +4,7 @@ from typing import override
 from BaseClasses import CollectionState
 from NetUtils import JSONMessagePart
 from rule_builder.rules import Rule
+from ..items.cars import BurningCars
 from ...world_base import BurnoutParadiseRemasteredBase
 from ..items.events import Events, BurningEvents
 from ...constants import BURNOUT_PARADISE_REMASTERED
@@ -33,9 +34,11 @@ class HasEventWins(Rule[BurnoutParadiseRemasteredBase], game=BURNOUT_PARADISE_RE
             )
 
             burning_event_count = state.count_from_list(
-                [item.value for item in BurningEvents],
+                [item.value for item in BurningCars],
                 self.player
             )
+            #starting car has a burning event
+            burning_event_count += 1
 
             remaining_wins = self.wins
             remaining_burning_events = burning_event_count

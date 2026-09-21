@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from BaseClasses import Item
 from .data import ItemTypeEnum, ItemData
 from .data.items.blockers import Blockers
-from .data.items.cars import Cars, StartingCar
+from .data.items.cars import Cars, StartingCar, BurningCars
 from .data.items.events import Events, BurningEvents
 from .data.items.filler import Filler
 
@@ -40,16 +40,17 @@ def create_items(world: "MinaTheHollowerWorld"):
         create_single_item(world, item_type)
     for item_type in Cars:
         create_single_item(world, item_type)
-    for item_type in remaining_events:
+    for item_type in BurningCars:
         create_single_item(world, item_type)
-    for item_type in BurningEvents:
+    for item_type in remaining_events:
         create_single_item(world, item_type)
 
 
     total_location_count = len(world.multiworld.get_unfilled_locations(world.player))
 
     _remaining = total_location_count - len(world.itempool)
-
+    print(f"Location Count: {total_location_count} | Item count: {len(world.itempool)}")
+    user_response = input("Enter: ")
     create_item(world, ItemData(Filler.BOOST, _remaining))
 
     world.multiworld.itempool += world.itempool

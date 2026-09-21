@@ -22,7 +22,6 @@ def create_location(world, data: GeneratedLocationData):
     location = Location(world.player, data.name, data.location_id, region)
     location.progress_type = data.progress_type
     # location.item_rule = data.item_rule
-    print(location.name)
     region.locations.append(location)
     world.set_rule(location, data.rule)
 
@@ -37,7 +36,6 @@ def create_region(world: "BurnoutParadiseRemasteredWorld", region_type: RegionTy
         location = Location(world.player, data.name, data.location_id, region)
         location.progress_type = data.progress_type
         # location.item_rule = data.item_rule
-        print(f"{location.name} : {data.location_id}")
         region.locations.append(location)
         world.set_rule(location, data.rule)
 

@@ -49,8 +49,7 @@ def create_items(world: "MinaTheHollowerWorld"):
     total_location_count = len(world.multiworld.get_unfilled_locations(world.player))
 
     _remaining = total_location_count - len(world.itempool)
-    print(f"Location Count: {total_location_count} | Item count: {len(world.itempool)}")
-    user_response = input("Enter: ")
+
     create_item(world, ItemData(Filler.BOOST, _remaining))
 
     world.multiworld.itempool += world.itempool

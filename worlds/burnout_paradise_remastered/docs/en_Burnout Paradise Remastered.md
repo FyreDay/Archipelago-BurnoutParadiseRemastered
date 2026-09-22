@@ -40,5 +40,5 @@ Burnout Paradise Remastered was the most accessible to develop for. There is a d
 2. Create a folder named "mods" in the games Install directory it does not already exist
     - For steam, its STEAM_INSTALL\steamapps\common\BurnoutPR
     - For Origin, I have no Idea, and I have not tested it
-3. Unzip the mod.zip (containing a `apclient` folder with a `bpr_apclient.dll`) inside into the "mods folder"
+3. put the mod `bpr_apclient.dll` inside into the "mods" folder
 4. Launch the game

@@ -203,10 +203,10 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
 
         self.options.goal.value = slot_data["goal_config"]
         self.options.license_goal.value = slot_data["license_goal"]
-        self.options.breakable_locks = slot_data["breakable_locks"]
+        self.options.breakable_locks.value = slot_data["breakable_locks"]
         # self.options.car_goal.value = slot_data["car_goal_count"]
-        self.smash_counts.value = slot_data["smash_sanity"]
+        self.options.smash_counts.value = slot_data["smash_sanity"]
         self.options.billboard_counts.value = slot_data["billboard_sanity"]
-        self.super_jump_counts.value = slot_data["super_jump_sanity"]
+        self.options.super_jump_counts.value = slot_data["super_jump_sanity"]
 
         return slot_data

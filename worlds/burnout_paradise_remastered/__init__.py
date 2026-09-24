@@ -1,4 +1,5 @@
 import json
+import os
 from importlib.resources import files
 from typing import ClassVar, Any
 
@@ -169,7 +170,7 @@ class BurnoutParadiseRemasteredWorld(BurnoutParadiseRemasteredBase):
         print("Generating Output")
         visualize_regions(
             self.multiworld.get_region("Menu", self.player),
-            f"Player{self.player}_output.puml",
+            file_name=os.path.join(output_directory, f"Player{self.player}_output.puml"),
             show_entrance_names=True,
             regions_to_highlight=self.multiworld.get_all_state(
                 self.player
